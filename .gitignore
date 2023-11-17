@@ -37,5 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 
-src\main\resources\ApiKey.txt
+ApiKey.txt
+
 /target/WeatherDatabase.db
