@@ -40,7 +40,7 @@ In this project, there are 10 different classes.
 - Additionally, interfaces are created for "WeatherDataProvider" and "WeatherStoreManager," named "WeatherDataProviderInterface" and "WeatherStoreManagerInterface."
 - Finally, a user interface named "WeatherApp" is implemented, which uses the function created in the "WeatherDataTableQuery" class to allow the user to enter the name of an island and a date to access those data.
 
-### Patrones y Principios de Diseño
+### Patterns and design principles
 Regarding design principles:
 
 Firstly, each class has a unique responsibility, such as WeatherApiConnector for API connection, WeatherDataProvider for weather data retrieval, WeatherDataStoreManager for storing data in the database...
@@ -60,4 +60,4 @@ The strategy pattern is employed, where different implementations can be swapped
 Additionally, the use of Timer and TimerTask for performing periodic tasks is a form of the observer pattern, where the timer observes and executes the defined tasks.
 
 ### Class Diagram
-![img.png](ClassDiagram.png)
+![img.png](src/main/resources/ClassDiagram.png)
