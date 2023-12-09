@@ -1,10 +1,14 @@
 package dacd.navarro.control;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import dacd.navarro.model.Location;
 import dacd.navarro.model.Weather;
 
@@ -16,6 +20,7 @@ public class WeatherProvider implements WeatherProviderInterface {
     public WeatherProvider(WeatherApiConnector apiConnector, String apiKey) {
         this.apiConnector = apiConnector;
         this.apiKey = apiKey;
+        this.gson = createGson();
     }
 
     public List<Weather> getWeatherData(List<Location> locationObjectList) throws IOException {
@@ -67,8 +72,35 @@ public class WeatherProvider implements WeatherProviderInterface {
         JsonObject weatherObject = weatherArray.get(0).getAsJsonObject();
         String weatherDescription = weatherObject.get("description").getAsString();
 
+        Instant ts = Instant.now();
+        String ss = "prediction-provider";
+        String predictionTime = date;
 
-        return new Weather(locationName, cityName, date, temperature, precipitation, humidity, cloudiness, windSpeed, weatherDescription);
+        return new Weather(ts, ss, predictionTime, locationName, cityName, date, temperature, precipitation, humidity, cloudiness, windSpeed, weatherDescription);
+    }
+
+    public Gson createGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Instant.class, new TypeAdapter<Instant>() {
+                    @Override
+                    public void write(JsonWriter out, Instant ts) throws IOException {
+                        if (ts == null) {
+                            out.nullValue();
+                        } else {
+                            out.value(ts.toString());
+                        }
+                    }
+
+                    @Override
+                    public Instant read(JsonReader in) throws IOException {
+                        if (in.peek() == JsonToken.NULL) {
+                            in.nextNull();
+                            return null;
+                        }
+                        return Instant.parse(in.nextString());
+                    }
+                })
+                .create();
     }
 
     public String serializeWeatherObject(Weather weatherObject) {

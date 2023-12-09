@@ -2,6 +2,7 @@ package dacd.navarro.control;
 
 import dacd.navarro.model.*;
 
+import javax.jms.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,10 +10,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class WeatherController {
 
-    public static void execute(String apiKey) throws IOException {
+    public static void execute(String apiKey) throws IOException, JMSException {
         List<Weather> weatherDataObjectsList;
 
         WeatherApiConnector apiConnector = new WeatherApiConnector();
@@ -47,6 +47,7 @@ public class WeatherController {
         for (int i = 0; i < weatherDataObjectsList.size(); i++) {
             String json = dataProvider.serializeWeatherObject(weatherDataObjectsList.get(i));
             System.out.println(json);
+            MessageSender.messageToBroker(json);
         }
     }
 }

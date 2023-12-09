@@ -1,6 +1,10 @@
 package dacd.navarro.model;
+import java.time.Instant;
 
 public class Weather {
+    private Instant ts;
+    private String ss;
+    private String predictionTime;
     private String name;
     private String location;
     private String date;
@@ -11,7 +15,7 @@ public class Weather {
     private String description;
     private double precipitation;
 
-    public Weather(String name, String location, String date, double temperature, double precipitation, int humidity, int clouds, double windSpeed, String description) {
+    public Weather(Instant ts, String ss, String predictionTime, String name, String location, String date, double temperature, double precipitation, int humidity, int clouds, double windSpeed, String description) {
         this.name = name;
         this.location = location;
         this.date = date;
@@ -21,6 +25,9 @@ public class Weather {
         this.windSpeed = windSpeed;
         this.description = description;
         this.precipitation = precipitation;
+        this.ts = ts;
+        this.ss = ss;
+        this.predictionTime = predictionTime;
     }
 
     public double getPrecipitation() {
@@ -67,4 +74,16 @@ public class Weather {
         return description;
     }
 
+    public Instant getTs() {
+        return ts;
+    }
+
+    public String getSs() {
+        return ss;
+    }
+
+    public String getPredictionTime() {
+        return predictionTime;
+    }
 }
+
