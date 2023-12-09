@@ -5,7 +5,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class AMQTopicSubscriber implements MessageListener {
+public class AMQTopicSubscriber implements Subscriber, MessageListener {
     private static String url;
     private static String topicName;
 
