@@ -24,7 +24,7 @@ public class WeatherProvider implements WeatherProviderInterface {
     }
 
     public List<Weather> getWeatherData(List<Location> locationObjectList) throws IOException {
-        List<Weather> weatherDataObjectsList = new ArrayList<>();
+        List<Weather> weatherObjectsList = new ArrayList<>();
 
         for (Location location : locationObjectList) {
             String responseBody = apiConnector.getApiResponse(location.getLatitude(), location.getLongitude(), apiKey);
@@ -34,15 +34,15 @@ public class WeatherProvider implements WeatherProviderInterface {
                 JsonObject city = jsonObject.getAsJsonObject("city");
                 JsonArray weatherList = jsonObject.getAsJsonArray("list");
 
-                weatherDataObjectsList.addAll(parseWeatherList(location, weatherList, city, location.getName()));
+                weatherObjectsList.addAll(parseWeatherList(location, weatherList, city, location.getName()));
             }
         }
 
-        return weatherDataObjectsList;
+        return weatherObjectsList;
     }
 
     public List<Weather> parseWeatherList(Location location, JsonArray weatherList, JsonObject city, String locationName) {
-        List<Weather> weatherDataObjectsList = new ArrayList<>();
+        List<Weather> weatherObjectsList = new ArrayList<>();
 
         for (JsonElement element : weatherList) {
             JsonObject weatherData = element.getAsJsonObject();
@@ -51,11 +51,11 @@ public class WeatherProvider implements WeatherProviderInterface {
             if (date.contains("12:00:00")) {
                 String cityName = city.get("name").getAsString();
                 Weather weatherDataObject = createWeatherObject(location, weatherData, locationName, cityName);
-                weatherDataObjectsList.add(weatherDataObject);
+                weatherObjectsList.add(weatherDataObject);
             }
         }
 
-        return weatherDataObjectsList;
+        return weatherObjectsList;
     }
 
     public Weather createWeatherObject(Location location, JsonObject weatherData, String locationName, String cityName) {

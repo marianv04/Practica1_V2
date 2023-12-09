@@ -13,7 +13,7 @@ import java.util.List;
 public class WeatherController {
 
     public static void execute(String apiKey) throws IOException, JMSException {
-        List<Weather> weatherDataObjectsList;
+        List<Weather> weatherObjectsList;
 
         WeatherApiConnector apiConnector = new WeatherApiConnector();
         WeatherProviderInterface dataProvider = new WeatherProvider(apiConnector, apiKey);
@@ -42,10 +42,10 @@ public class WeatherController {
             }
         }
 
-        weatherDataObjectsList = dataProvider.getWeatherData(locationObjectList);
+        weatherObjectsList = dataProvider.getWeatherData(locationObjectList);
 
-        for (int i = 0; i < weatherDataObjectsList.size(); i++) {
-            String json = dataProvider.serializeWeatherObject(weatherDataObjectsList.get(i));
+        for (int i = 0; i < weatherObjectsList.size(); i++) {
+            String json = dataProvider.serializeWeatherObject(weatherObjectsList.get(i));
             System.out.println(json);
             MessageSender.messageToBroker(json);
         }
