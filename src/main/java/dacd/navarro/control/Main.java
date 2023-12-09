@@ -1,10 +1,9 @@
 package dacd.navarro.control;
 
-import java.text.ParseException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
 
         Timer timer = new Timer();
 
@@ -15,8 +14,8 @@ public class Main {
             @Override
             public void run() {
                 try {
-
-                    WeatherDataController.execute();
+                    String apiKey = args[0];
+                    WeatherController.execute(apiKey);
 
                 } catch (Exception e) {
                     e.printStackTrace();

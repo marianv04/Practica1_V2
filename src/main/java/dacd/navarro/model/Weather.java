@@ -1,6 +1,6 @@
 package dacd.navarro.model;
 
-public class WeatherData {
+public class Weather {
     private String name;
     private String location;
     private String date;
@@ -11,7 +11,7 @@ public class WeatherData {
     private String description;
     private double precipitation;
 
-    public WeatherData(String name, String location, String date, double temperature, double precipitation, int humidity, int clouds, double windSpeed, String description) {
+    public Weather(String name, String location, String date, double temperature, double precipitation, int humidity, int clouds, double windSpeed, String description) {
         this.name = name;
         this.location = location;
         this.date = date;
