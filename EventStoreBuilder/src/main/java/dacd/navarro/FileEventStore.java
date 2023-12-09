@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileEventStore {
+public class FileEventStore implements Listener{
     public static List<String> directoryCreator(String json){
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
@@ -63,4 +63,3 @@ public class FileEventStore {
     }
 
 }
-
