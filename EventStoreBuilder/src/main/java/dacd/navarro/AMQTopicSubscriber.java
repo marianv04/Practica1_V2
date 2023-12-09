@@ -49,6 +49,9 @@ public class AMQTopicSubscriber implements Subscriber, MessageListener {
             if (message instanceof TextMessage) {
                 String response = ((TextMessage) message).getText();
                 System.out.println("Received = " + response);
+                FileEventStore eventStore = new FileEventStore();
+
+                eventStore.consume(response);
 
                 if (response.equalsIgnoreCase("Quit")) {
                     synchronized (this) {
