@@ -34,14 +34,14 @@ public class WeatherProvider implements WeatherProviderInterface {
                 JsonObject city = jsonObject.getAsJsonObject("city");
                 JsonArray weatherList = jsonObject.getAsJsonArray("list");
 
-                weatherDataObjectsList.addAll(parseWeatherList(weatherList, city, location.getName()));
+                weatherDataObjectsList.addAll(parseWeatherList(location, weatherList, city, location.getName()));
             }
         }
 
         return weatherDataObjectsList;
     }
 
-    public List<Weather> parseWeatherList(JsonArray weatherList, JsonObject city, String locationName) {
+    public List<Weather> parseWeatherList(Location location, JsonArray weatherList, JsonObject city, String locationName) {
         List<Weather> weatherDataObjectsList = new ArrayList<>();
 
         for (JsonElement element : weatherList) {
@@ -50,7 +50,7 @@ public class WeatherProvider implements WeatherProviderInterface {
 
             if (date.contains("12:00:00")) {
                 String cityName = city.get("name").getAsString();
-                Weather weatherDataObject = createWeatherObject(weatherData, locationName, cityName);
+                Weather weatherDataObject = createWeatherObject(location, weatherData, locationName, cityName);
                 weatherDataObjectsList.add(weatherDataObject);
             }
         }
@@ -58,7 +58,7 @@ public class WeatherProvider implements WeatherProviderInterface {
         return weatherDataObjectsList;
     }
 
-    public Weather createWeatherObject(JsonObject weatherData, String locationName, String cityName) {
+    public Weather createWeatherObject(Location location, JsonObject weatherData, String locationName, String cityName) {
         String date = weatherData.get("dt_txt").getAsString();
         JsonObject main = weatherData.getAsJsonObject("main");
         double temperature = main.get("temp").getAsDouble();
@@ -76,7 +76,7 @@ public class WeatherProvider implements WeatherProviderInterface {
         String ss = "prediction-provider";
         String predictionTime = date;
 
-        return new Weather(ts, ss, predictionTime, locationName, cityName, date, temperature, precipitation, humidity, cloudiness, windSpeed, weatherDescription);
+        return new Weather(location, ts, ss, predictionTime, locationName, cityName, date, temperature, precipitation, humidity, cloudiness, windSpeed, weatherDescription);
     }
 
     public Gson createGson() {
