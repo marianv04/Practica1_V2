@@ -7,27 +7,19 @@ public class Weather {
     private Instant ts;
     private String ss;
     private String predictionTime;
-    private String name;
-    private String location;
-    private String date;
     private double temperature;
     private int humidity;
     private int clouds;
     private double windSpeed;
-    private String description;
     private double precipitation;
-    private Location locationObject;
+    private Location location;
 
-    public Weather(Location locationObject, Instant ts, String ss, String predictionTime, String name, String location, String date, double temperature, double precipitation, int humidity, int clouds, double windSpeed, String description) {
-        this.name = name;
+    public Weather(Location location, Instant ts, String ss, String predictionTime, double temperature, double precipitation, int humidity, int clouds, double windSpeed) {
         this.location = location;
-        this.locationObject = locationObject;
-        this.date = date;
         this.temperature = temperature;
         this.humidity = humidity;
         this.clouds = clouds;
         this.windSpeed = windSpeed;
-        this.description = description;
         this.precipitation = precipitation;
         this.ts = ts;
         this.ss = ss;
@@ -36,21 +28,6 @@ public class Weather {
 
     public double getPrecipitation() {
         return precipitation;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    public String getLocation() {
-        return location;
-    }
-
-
-    public String getDate() {
-        return date;
     }
 
 
@@ -74,10 +51,6 @@ public class Weather {
     }
 
 
-    public String getDescription() {
-        return description;
-    }
-
     public Instant getTs() {
         return ts;
     }
@@ -90,8 +63,8 @@ public class Weather {
         return predictionTime;
     }
 
-    public Location getLocationObject() {
-        return locationObject;
+    public Location getLocation() {
+        return location;
     }
 }
 

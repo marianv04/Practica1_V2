@@ -1,9 +1,10 @@
 package dacd.navarro.control;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import dacd.navarro.model.*;
 
 import javax.jms.*;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,39 +14,40 @@ import java.util.List;
 public class WeatherController {
 
     public static void execute(String apiKey) throws IOException, JMSException {
-        List<Weather> weatherObjectsList;
+        List<Weather> weatherDataObjectsList;
 
         WeatherApiConnector apiConnector = new WeatherApiConnector();
-        WeatherProviderInterface dataProvider = new WeatherProvider(apiConnector, apiKey);
+        Provider dataProvider = new WeatherProvider(apiConnector, apiKey);
 
         List<Location> locationObjectList = new ArrayList<>();
 
         try (InputStream inputStream = WeatherController.class.getClassLoader().getResourceAsStream("Locations.csv")) {
             if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader buffer = new BufferedReader(inputStreamReader);
-                String line;
+                CSVReader reader = new CSVReader(inputStreamReader);
 
-                while ((line = buffer.readLine()) != null) {
-                    String[] parts = line.split(",");
-                    String name = parts[0];
-                    double latitude = Double.parseDouble(parts[1]);
-                    double longitude = Double.parseDouble(parts[2]);
+                String[] line;
+                while ((line = reader.readNext()) != null) {
+
+                    String name = line[0];
+                    double latitude = Double.parseDouble(line[1]);
+                    double longitude = Double.parseDouble(line[2]);
 
                     Location locationObject = new Location(name, latitude, longitude);
                     locationObjectList.add(locationObject);
                 }
 
-                buffer.close();
             } else {
                 throw new IOException("Locations.csv could not be loaded.");
             }
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
         }
 
-        weatherObjectsList = dataProvider.getWeatherData(locationObjectList);
+        weatherDataObjectsList = dataProvider.getWeatherData(locationObjectList);
 
-        for (int i = 0; i < weatherObjectsList.size(); i++) {
-            String json = dataProvider.serializeWeatherObject(weatherObjectsList.get(i));
+        for (int i = 0; i < weatherDataObjectsList.size(); i++) {
+            String json = dataProvider.serializeWeatherObject(weatherDataObjectsList.get(i));
             System.out.println(json);
             MessageSender.messageToBroker(json);
         }
