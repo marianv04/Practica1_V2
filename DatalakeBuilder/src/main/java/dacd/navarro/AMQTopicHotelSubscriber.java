@@ -5,7 +5,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class AMQTopicSubscriber implements Subscriber, MessageListener {
+public class AMQTopicHotelSubscriber implements Subscriber, MessageListener {
     private static String url;
     private static String topicName;
 
@@ -13,7 +13,7 @@ public class AMQTopicSubscriber implements Subscriber, MessageListener {
     private static Session session;
     private static String subscriberName;
 
-    public AMQTopicSubscriber(String subscriberName, String topicName) throws JMSException {
+    public AMQTopicHotelSubscriber(String subscriberName, String topicName) throws JMSException {
         this.subscriberName = subscriberName;
         this.topicName = topicName;
 
@@ -25,22 +25,12 @@ public class AMQTopicSubscriber implements Subscriber, MessageListener {
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     }
+
     public void subscribeToTopic() throws JMSException {
         Topic topic = session.createTopic(topicName);
 
         MessageConsumer consumer = session.createDurableSubscriber(topic, subscriberName);
         consumer.setMessageListener(this);
-
-        try {
-            synchronized (this) {
-                wait();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-
-            connection.close();
-        }
     }
 
     @Override
@@ -50,18 +40,14 @@ public class AMQTopicSubscriber implements Subscriber, MessageListener {
                 String response = ((TextMessage) message).getText();
                 System.out.println("Received = " + response);
                 FileEventStore eventStore = new FileEventStore();
-
-                eventStore.consume(response);
+                eventStore.consume(response, topicName);
 
                 if (response.equalsIgnoreCase("Quit")) {
-                    synchronized (this) {
-                        notify();
-                    }
+                    connection.close();
                 }
             }
         } catch (JMSException e) {
             e.printStackTrace();
         }
     }
-
 }

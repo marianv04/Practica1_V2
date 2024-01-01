@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileEventStore implements Listener{
-    public static List<String> directoryCreator(String json){
+    public static List<String> directoryCreator(String json, String topic){
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
 
@@ -25,8 +25,9 @@ public class FileEventStore implements Listener{
         LocalDateTime tsLocalDateTime = LocalDateTime.ofInstant(ts, ZoneId.of("UTC"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedTs = tsLocalDateTime.format(formatter);
+        System.out.println("datalake" + "/" + topic + "/" + ss + "/");
         List<String> directory = new ArrayList<>();
-        directory.add("eventstore" + "/" + "prediction.Weather" + "/" + ss + "/");
+        directory.add("datalake" + "/" + topic + "/" + ss + "/");
         directory.add(formattedTs);
 
         return directory;
@@ -49,15 +50,15 @@ public class FileEventStore implements Listener{
                 System.out.println("The serialized event has been written in the file.");
             }
 
-            System.out.println("Event successfully stored in the Event Store.");
+            System.out.println("Event successfully stored in the Datalake.");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void consume(String message) throws JMSException {
-        List<String> directoryPath = directoryCreator(message);
+    public void consume(String message, String topic) throws JMSException {
+        List<String> directoryPath = directoryCreator(message, topic);
         storeEventInFile(message, directoryPath);
     }
 

@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>PredictionProvider</module>
-        <module>EventStoreBuilder</module>
+        <module>DatalakeBuilder</module>
     </modules>
 
     <properties>
