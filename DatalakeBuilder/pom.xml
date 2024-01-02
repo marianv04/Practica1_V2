@@ -41,7 +41,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>dacd.navarro.control.Main</mainClass>
+                                    <mainClass>dacd.navarro.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
