@@ -14,46 +14,56 @@ import java.util.List;
 public class HotelProvider implements Provider{
     private Gson gson = createGson();
     public List<String> getHotelInfo(String jsonResponse, String island) {
-
         JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+        List<Hotel> hotelObjectList = extractHotelObjects(jsonObject, island);
+        return addObjectsInList(hotelObjectList);
+    }
+
+    public List<Hotel> extractHotelObjects(JsonObject jsonObject, String island) {
         List<Hotel> hotelObjectList = new ArrayList<>();
-        List<String> hotelObjectSerializedList = new ArrayList<>();
-
-
         JsonArray propertiesArray = jsonObject.getAsJsonArray("properties");
-
 
         for (int i = 0; i < propertiesArray.size(); i++) {
             JsonObject propertyObject = propertiesArray.get(i).getAsJsonObject();
-
-            String id = getString(propertyObject, "id");
-            String name = getString(propertyObject, "name");
-            double amount = getDouble(propertyObject, "price", "lead", "amount");
-            int star = getInt(propertyObject, "star");
-            double score = getDouble(propertyObject, "reviews", "score");
-            String themeTemp = getString(propertyObject, "offerBadge", "primary", "theme_temp");
-            double latitude = getDouble(propertyObject, "mapMarker", "latLong", "latitude");
-            double longitude = getDouble(propertyObject, "mapMarker", "latLong", "longitude");
-
-            System.out.println("ID: " + id);
-            System.out.println("Name: " + name);
-            System.out.println("Amount: " + amount);
-            System.out.println("Star: " + star);
-            System.out.println("Score: " + score);
-            System.out.println("Theme Temp: " + themeTemp);
-            System.out.println("Latitude: " + latitude);
-            System.out.println("Longitude: " + longitude);
-            System.out.println("-------------------------");
-
-            Instant ts = Instant.now();
-            String ss = "hotel-provider";
-
-            Hotel hotel = new Hotel(ts, ss, island, id, name, amount, star, score, themeTemp,latitude, longitude);
+            Hotel hotel = createHotelObject(propertyObject, island);
             hotelObjectList.add(hotel);
+        }
+
+        return hotelObjectList;
+    }
+
+    public Hotel createHotelObject(JsonObject propertyObject, String island) {
+        String id = getString(propertyObject, "id");
+        String name = getString(propertyObject, "name");
+        double amount = getDouble(propertyObject, "price", "lead", "amount");
+        int star = getInt(propertyObject, "star");
+        double score = getDouble(propertyObject, "reviews", "score");
+        String themeTemp = getString(propertyObject, "offerBadge", "primary", "theme_temp");
+        double latitude = getDouble(propertyObject, "mapMarker", "latLong", "latitude");
+        double longitude = getDouble(propertyObject, "mapMarker", "latLong", "longitude");
+
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Amount: " + amount);
+        System.out.println("Star: " + star);
+        System.out.println("Score: " + score);
+        System.out.println("Theme Temp: " + themeTemp);
+        System.out.println("Latitude: " + latitude);
+        System.out.println("Longitude: " + longitude);
+        System.out.println("-------------------------");
+
+        Instant ts = Instant.now();
+        String ss = "hotel-provider";
+
+        return new Hotel(ts, ss, island, id, name, amount, star, score, themeTemp, latitude, longitude);
+    }
+
+    public List<String> addObjectsInList(List<Hotel> hotelObjectList) {
+        List<String> hotelObjectSerializedList = new ArrayList<>();
+        for (Hotel hotel : hotelObjectList) {
             System.out.println("Objeto creado");
             String hotelJson = serializeHotelObject(hotel);
             hotelObjectSerializedList.add(hotelJson);
-
         }
         return hotelObjectSerializedList;
     }

@@ -13,12 +13,10 @@ public class AMQTopicWeatherSubscriber implements Subscriber, MessageListener {
 
     private static Connection connection;
     private static Session session;
-    private static String subscriberName;
     private static List<String> eventWeatherList = new ArrayList<>();
 
 
-    public AMQTopicWeatherSubscriber(String subscriberName, String topicName) throws JMSException {
-        this.subscriberName = subscriberName;
+    public AMQTopicWeatherSubscriber(String topicName) throws JMSException {
         this.topicName = topicName;
 
         url = ActiveMQConnection.DEFAULT_BROKER_URL;

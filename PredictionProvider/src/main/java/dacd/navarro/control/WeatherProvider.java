@@ -49,7 +49,7 @@ public class WeatherProvider implements Provider {
             JsonObject weatherData = element.getAsJsonObject();
             String date = weatherData.get("dt_txt").getAsString();
 
-            if (date.contains("00:00:00")) {
+            if (date.contains("12:00:00")) {
                 String cityName = city.get("name").getAsString();
                 Weather weatherDataObject = createWeatherObject(location, weatherData, locationName, cityName);
                 weatherDataObjectsList.add(weatherDataObject);

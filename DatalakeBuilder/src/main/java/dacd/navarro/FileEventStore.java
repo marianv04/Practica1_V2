@@ -25,7 +25,6 @@ public class FileEventStore implements Listener{
         LocalDateTime tsLocalDateTime = LocalDateTime.ofInstant(ts, ZoneId.of("UTC"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedTs = tsLocalDateTime.format(formatter);
-        System.out.println("datalake" + "/" + topic + "/" + ss + "/");
         List<String> directory = new ArrayList<>();
         directory.add("datalake" + "/" + topic + "/" + ss + "/");
         directory.add(formattedTs);

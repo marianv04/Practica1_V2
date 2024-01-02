@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class HotelApiConnector {
     public static int getRegionId(String query, String apiKey) {
-        System.out.println(query);
         String locale = "es_ES";
         String baseUrl = "https://hotels-com-provider.p.rapidapi.com/v2/regions";
 

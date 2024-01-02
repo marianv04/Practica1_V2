@@ -13,11 +13,9 @@ public class AMQTopicHotelSubscriber implements Subscriber, MessageListener {
 
     private static Connection connection;
     private static Session session;
-    private static String subscriberName;
     private static List<String> eventHotelList = new ArrayList<>();
 
-    public AMQTopicHotelSubscriber(String subscriberName, String topicName) throws JMSException {
-        this.subscriberName = subscriberName;
+    public AMQTopicHotelSubscriber(String topicName) throws JMSException {
         this.topicName = topicName;
 
         url = ActiveMQConnection.DEFAULT_BROKER_URL;

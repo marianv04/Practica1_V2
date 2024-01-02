@@ -11,7 +11,6 @@ public class Hotel {
     private double price;
     private int stars;
     private double score;
-
     private String themeTemp;
     private double latitude;
     private double longitude;

@@ -16,7 +16,7 @@ public class HotelController {
         islands = readFile();
         for(int i = 0; i < islands.size(); i++){
             int regionId = HotelApiConnector.getRegionId(islands.get(i), apiKey);
-            String response = HotelApiConnector.getHotels(regionId, apiKey, "2024-09-09", "2024-10-10", 1);  //como hago que el cliente ponga esto
+            String response = HotelApiConnector.getHotels(regionId, apiKey, "2024-09-09", "2024-10-10", 1);
             List<String> hotelSerializedList = dataProvider.getHotelInfo(response, islands.get(i));
 
             for(String hotelObjectSerialized : hotelSerializedList){

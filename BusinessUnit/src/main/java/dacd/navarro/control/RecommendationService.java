@@ -50,8 +50,6 @@ public class RecommendationService {
             chosenIsland = scanner.nextLine();
             System.out.println("You chose " + chosenIsland + ".");
         }
-
-
         return chosenIsland;
     }
 
@@ -64,7 +62,7 @@ public class RecommendationService {
                     userTempList.add(weather);
                 }
             }
-            System.out.println("You chose colder temperatures." + userTempList.size());
+            System.out.println("You chose colder temperatures.");
         }
         if ("normal".equals(userTemp)) {
             for (Weather weather : weatherObjects) {
@@ -73,7 +71,7 @@ public class RecommendationService {
                     userTempList.add(weather);
                 }
             }
-            System.out.println("You chose normal temperatures." + userTempList.size());
+            System.out.println("You chose normal temperatures.");
         }
         if ("hotter".equals(userTemp)) {
             for (Weather weather : weatherObjects) {
@@ -82,7 +80,7 @@ public class RecommendationService {
                     userTempList.add(weather);
                 }
             }
-            System.out.println("You chose hotter temperatures." + userTempList.size());
+            System.out.println("You chose hotter temperatures.");
         }
         return userTempList;
     }
@@ -96,7 +94,7 @@ public class RecommendationService {
                     userCloudsList.add(weather);
                 }
             }
-            System.out.println("You chose a cloudless sky." + userCloudsList.size());
+            System.out.println("You chose a cloudless sky.");
         }
         if ("lots of clouds".equals(userClouds)) {
             for (Weather weather : userTempList) {
@@ -105,7 +103,7 @@ public class RecommendationService {
                     userCloudsList.add(weather);
                 }
             }
-            System.out.println("You chose a sky with lots of clouds." + userCloudsList.size());
+            System.out.println("You chose a sky with lots of clouds.");
         }
         return userCloudsList;
     }
@@ -119,7 +117,7 @@ public class RecommendationService {
                     userPrecipitationList.add(weather);
                 }
             }
-            System.out.println("You chose a rainy weather." + userPrecipitationList.size());
+            System.out.println("You chose a rainy weather.");
         }
         if ("dry".equals(userPrecipitation)) {
             for (Weather weather : userCloudsList) {
@@ -128,7 +126,7 @@ public class RecommendationService {
                     userPrecipitationList.add(weather);
                 }
             }
-            System.out.println("You chose a dry weather." + userPrecipitationList.size());
+            System.out.println("You chose a dry weather.");
         }
         return userPrecipitationList;
     }
@@ -136,14 +134,11 @@ public class RecommendationService {
     public static String chooseIsland(List<Weather> userList) {
         Map<String, Integer> islandCountMap = new HashMap<>();
 
-
-        // Contar la frecuencia de cada isla
         for (Weather weather : userList) {
             String island = weather.getLocationObject().getName();
             islandCountMap.put(island, islandCountMap.getOrDefault(island, 0) + 1);
         }
 
-        // Encontrar el nombre de la isla con mayor frecuencia
         String mostFrequentIsland = null;
         int maxCount = 0;
 
@@ -213,7 +208,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at last 1 star." + userStarsList.size());
+            System.out.println("You chose at last 1 star.");
         }
         if ("2".equals(userStars)) {
             for (Hotel hotel : chosenIslandHotels) {
@@ -222,7 +217,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at least 2 stars." + userStarsList.size());
+            System.out.println("You chose at least 2 stars.");
         }
         if ("3".equals(userStars)) {
             for (Hotel hotel : chosenIslandHotels) {
@@ -231,7 +226,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at least 3 stars." + userStarsList.size());
+            System.out.println("You chose at least 3 stars.");
         }
         if ("4".equals(userStars)) {
             for (Hotel hotel : chosenIslandHotels) {
@@ -240,7 +235,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at least 4 stars." + userStarsList.size());
+            System.out.println("You chose at least 4 stars.");
         }
         if ("5".equals(userStars)) {
             for (Hotel hotel : chosenIslandHotels) {
@@ -249,7 +244,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at least 5 stars." + userStarsList.size());
+            System.out.println("You chose at least 5 stars.");
         }
         return userStarsList;
     }
@@ -263,7 +258,7 @@ public class RecommendationService {
                     userPriceList.add(hotel);
                 }
             }
-            System.out.println("You chose lower prices." + userPriceList.size());
+            System.out.println("You chose lower prices.");
         }
         if ("normal".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
@@ -272,7 +267,7 @@ public class RecommendationService {
                     userPriceList.add(hotel);
                 }
             }
-            System.out.println("You chose normal prices ." + userPriceList.size());
+            System.out.println("You chose normal prices .");
         }
         if ("high".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
@@ -281,7 +276,7 @@ public class RecommendationService {
                     userPriceList.add(hotel);
                 }
             }
-            System.out.println("You chose higher prices." + userPriceList.size());
+            System.out.println("You chose higher prices.");
         }
         return userPriceList;
     }
@@ -295,7 +290,7 @@ public class RecommendationService {
                     userScoreList.add(hotel);
                 }
             }
-            System.out.println("You chose a score of at least 5." + userScoreList.size());
+            System.out.println("You chose a score of at least 5.");
         }
         if ("7".equals(userScore)) {
             for (Hotel hotel : userPriceList) {
@@ -304,7 +299,7 @@ public class RecommendationService {
                     userScoreList.add(hotel);
                 }
             }
-            System.out.println("You chose a score of at least 7." + userScoreList.size());
+            System.out.println("You chose a score of at least 7.");
         }
         if ("9".equals(userScore)) {
             for (Hotel hotel : userPriceList) {
@@ -313,7 +308,7 @@ public class RecommendationService {
                     userScoreList.add(hotel);
                 }
             }
-            System.out.println("You chose a score of at least 9." + userScoreList.size());
+            System.out.println("You chose a score of at least 9.");
         }
         if ("10".equals(userScore)) {
             for (Hotel hotel : userPriceList) {
@@ -322,7 +317,7 @@ public class RecommendationService {
                     userScoreList.add(hotel);
                 }
             }
-            System.out.println("You chose a score of at least 10." + userScoreList.size());
+            System.out.println("You chose a score of at least 10.");
         }
         return userScoreList;
     }
@@ -373,7 +368,6 @@ public class RecommendationService {
     }
 
     private static boolean areHotelsEqual(Hotel hotel1, Hotel hotel2) {
-        // Comparar los atributos relevantes para determinar si son iguales
         return hotel1.getId().equals(hotel2.getId());
     }
 
