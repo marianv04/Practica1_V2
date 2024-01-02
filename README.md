@@ -18,7 +18,7 @@ The DatalakeBuilder is a module whose purpose is to systematically store consume
 The BusinessUnit module, first tries to take the events from broker, but if there are no events available in the moment of execution, the module is tasked to read the events from the datalake. These events are then deserialized and saved in a datamart. And finally, the information from the datamart is used as a recommendation service to choose to what island to travel and what hotel to go.
 
 ### Execution process
-To execute the project, there must be an argument in the mains of the "PredictionProvider" and "HotelProvider" modules with the respective user's API key.
+To execute the project, there must be an argument in the mains of the "PredictionProvider" and "HotelProvider" modules with the respective user's API key. Be sure to be subscribed from both APIs.
 
 Additionally, the "DatalakeBuilder" module should be executed first, so that it waits for messages from the subscribed topics. Consequently, the "PredictionProvider" and "HotelProvider" modules should then be executed to send messages to the broker, while the other module receives them.
 
@@ -30,7 +30,7 @@ Finally, the "BusinessUnit" module then can be executed at any time when it is n
 - Documentation Tools: Markdown
 - Programming language: Java
 - Broker implementation: ActiveMq
-- Extern Services: Api from "openweathermap" and api from rapidapi "Hotels Com Provider"
+- Extern Services: Api from "openweathermap" and api from rapidapi "https://rapidapi.com/tipsters/api/hotels-com-provider"
 
 ## Design
 
