@@ -64,7 +64,7 @@ public class WeatherProvider implements Provider {
 
         String date = weatherData.get("dt_txt").getAsString();
         JsonObject main = weatherData.getAsJsonObject("main");
-        double temperature = main.get("temp").getAsDouble() - 273.15;
+        double temperature = main.get("temp").getAsDouble();
         double precipitation = weatherData.get("pop").getAsDouble();
         int humidity = main.get("humidity").getAsInt();
         JsonObject clouds = weatherData.getAsJsonObject("clouds");

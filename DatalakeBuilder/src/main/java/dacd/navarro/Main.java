@@ -10,11 +10,9 @@ public class Main {
         String topicNameWeather = "prediction.Weather";
         String subscriberNameHotel = "hotel-provider";
         String topicNameHotel = "search.Hotel";
-        Subscriber topicSubscriberWeather = new AMQTopicWeatherSubscriber(subscriberNameWeather, topicNameWeather);
+        Subscriber topicSubscriberWeather = new AMQTopicWeatherSubscriber(subscriberNameWeather, topicNameWeather, args[0]);
         topicSubscriberWeather.subscribeToTopic();
-        Subscriber topicSubscriberHotel = new AMQTopicHotelSubscriber(subscriberNameHotel, topicNameHotel);
+        Subscriber topicSubscriberHotel = new AMQTopicHotelSubscriber(subscriberNameHotel, topicNameHotel, args[0]);
         topicSubscriberHotel.subscribeToTopic();
-
-
     }
 }

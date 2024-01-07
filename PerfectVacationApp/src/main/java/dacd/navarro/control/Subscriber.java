@@ -4,7 +4,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import java.util.List;
 
-public interface Subscriber {
+public interface Subscriber extends AutoCloseable{
     void subscribeToTopic() throws JMSException;
     void onMessage(Message message);
 

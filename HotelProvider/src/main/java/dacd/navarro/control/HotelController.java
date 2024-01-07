@@ -6,17 +6,27 @@ import com.opencsv.exceptions.CsvValidationException;
 import javax.jms.JMSException;
 import java.io.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HotelController {
     public static void execute(String apiKey) throws JMSException {
         List<String> islands;
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(5);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentDateFormatted = currentDate.format(formatter);
+        String futureDateFormatted = futureDate.format(formatter);
+
         Provider dataProvider = new HotelProvider();
         islands = readFile();
         for(int i = 0; i < islands.size(); i++){
             int regionId = HotelApiConnector.getRegionId(islands.get(i), apiKey);
-            String response = HotelApiConnector.getHotels(regionId, apiKey, "2024-09-09", "2024-10-10", 1);
+            String response = HotelApiConnector.getHotels(regionId, apiKey, currentDateFormatted, futureDateFormatted, 1);
             List<String> hotelSerializedList = dataProvider.getHotelInfo(response, islands.get(i));
 
             for(String hotelObjectSerialized : hotelSerializedList){

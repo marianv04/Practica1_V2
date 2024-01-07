@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileEventStore implements Listener{
-    public static List<String> directoryCreator(String json, String topic){
+    public static List<String> directoryCreator(String json, String topic, String path){
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
 
@@ -26,7 +26,7 @@ public class FileEventStore implements Listener{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedTs = tsLocalDateTime.format(formatter);
         List<String> directory = new ArrayList<>();
-        directory.add("datalake" + "/" + topic + "/" + ss + "/");
+        directory.add(path + "datalake" + "/" + "eventstore" + "/" + topic + "/" + ss + "/");
         directory.add(formattedTs);
 
         return directory;
@@ -56,8 +56,8 @@ public class FileEventStore implements Listener{
         }
     }
 
-    public void consume(String message, String topic) throws JMSException {
-        List<String> directoryPath = directoryCreator(message, topic);
+    public void consume(String message, String topic, String path) throws JMSException {
+        List<String> directoryPath = directoryCreator(message, topic, path);
         storeEventInFile(message, directoryPath);
     }
 

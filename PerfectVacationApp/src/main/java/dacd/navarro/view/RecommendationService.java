@@ -1,4 +1,4 @@
-package dacd.navarro.control;
+package dacd.navarro.view;
 
 import dacd.navarro.model.Hotel;
 import dacd.navarro.model.Weather;
@@ -20,8 +20,13 @@ public class RecommendationService {
 
         System.out.println("¿Do you prefer a cloudless sky(<=10) or lots of clouds(>10)? (Please answer one of this two options: cloudless or lots of clouds) \n");
         String userClouds = scanner.nextLine();
+        List<Weather> userCloudsList;
+        if(userTempList.size() == 0){
+            userCloudsList = chooseClouds(userClouds, weatherObjects);
+        } else {
+            userCloudsList = chooseClouds(userClouds, userTempList);
+        }
 
-        List<Weather> userCloudsList = chooseClouds(userClouds, userTempList);
         if (chooseIsland(userCloudsList) != null){
             chosenIsland = chooseIsland(userCloudsList);
         }
@@ -29,7 +34,13 @@ public class RecommendationService {
         System.out.println("¿Do you prefer a rainy location(>=0.5) or a dry one (<0.5)? (Please answer one of this two options: rainy or dry) \n");
         String userPrecipitation = scanner.nextLine();
 
-        List<Weather> userPrecipitationList = choosePrecipitation(userPrecipitation, userCloudsList);
+        List<Weather> userPrecipitationList;
+        if(userCloudsList.size() == 0){
+            userPrecipitationList = choosePrecipitation(userPrecipitation, userTempList);
+        } else {
+            userPrecipitationList = choosePrecipitation(userPrecipitation, userCloudsList);
+        }
+
         if (chooseIsland(userPrecipitationList) != null){
             chosenIsland = chooseIsland(userPrecipitationList);
         }
@@ -135,7 +146,7 @@ public class RecommendationService {
         Map<String, Integer> islandCountMap = new HashMap<>();
 
         for (Weather weather : userList) {
-            String island = weather.getLocationObject().getName();
+            String island = weather.getIsland();
             islandCountMap.put(island, islandCountMap.getOrDefault(island, 0) + 1);
         }
 
@@ -170,7 +181,7 @@ public class RecommendationService {
 
         List<Hotel> userStarList = chooseStars(chosenIslandHotels, userStars);
 
-        System.out.println("¿Which price range are you willing to pay low price (<100), normal price (>=100 and <=200) or high price (>200)? (Please answer with: low, normal or high)");
+        System.out.println("¿Which price range are you willing to pay per night low price (<80), normal price (>=80 and <=180) or high price (>180)? (Please answer with: low, normal or high)");
         String userPrice = scanner.nextLine();
 
         List<Hotel> userPriceList;
@@ -180,7 +191,7 @@ public class RecommendationService {
             userPriceList = choosePrice(userStarList, userPrice);
         }
 
-        System.out.println("We have information on the average of the ratings that customers have given to hotels. ¿What is the minimum score you want your hotel to have, at least 5, at least 7, at least 9 or the maximum punctuation of 10? (Please answer with: 5, 7, 9 or 10");
+        System.out.println("We have information on the average of the ratings that customers have given to hotels. What is the minimum score you want your hotel to have, at least 5, at least 7, at least 9 or the maximum punctuation of 10? (Please answer with: 5, 7, 9 or 10");
         String userScore = scanner.nextLine();
 
         List<Hotel> userScoreList;
@@ -190,10 +201,15 @@ public class RecommendationService {
             userScoreList = chooseScore(userPriceList, userScore);
         }
 
+        if(userScoreList.size() > 50) {
+            System.out.println("There are some events that do not have information about the price per night, do yo want to be shown these hotel anyways? (Please answer with yes or no.)");
+            String answer = scanner.nextLine();
+            userScoreList = removeNoPriceInfo(answer, userScoreList);
+        }
 
         System.out.println("We've recollected the best hotels for you based on your preferences.");
-        if (userPriceList.size() == 0) {
-            showHotelsInfo(userPriceList);
+        if (userScoreList.size() == 0) {
+            System.out.println("We could not find a hotel that is suitable for your preferences.");;
         } else {
             showHotelsInfo(userScoreList);
         }
@@ -254,7 +270,7 @@ public class RecommendationService {
         if ("low".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price < 100) {
+                if (price < 80) {
                     userPriceList.add(hotel);
                 }
             }
@@ -263,16 +279,16 @@ public class RecommendationService {
         if ("normal".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price >= 100 & price <= 200) {
+                if (price >= 80 & price <= 180) {
                     userPriceList.add(hotel);
                 }
             }
-            System.out.println("You chose normal prices .");
+            System.out.println("You chose normal prices.");
         }
         if ("high".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price > 200) {
+                if (price > 180) {
                     userPriceList.add(hotel);
                 }
             }
@@ -322,6 +338,21 @@ public class RecommendationService {
         return userScoreList;
     }
 
+    public static List<Hotel> removeNoPriceInfo(String answer, List<Hotel> userScoreList){
+        List<Hotel> removed = new ArrayList<>();
+        if (answer.equals("no")){
+            for (Hotel hotel : userScoreList){
+                double price = hotel.getPrice();
+                if(price != 0.0){
+                    removed.add(hotel);
+                }
+            }
+        } else {
+            removed = userScoreList;
+        }
+        return removed;
+    }
+
     public static void showHotelsInfo(List<Hotel> userScoreList) {
         if (userScoreList.isEmpty()) {
             System.out.println("No options available.");
@@ -333,9 +364,8 @@ public class RecommendationService {
             for (int i = 0; i < uniqueHotels.size(); i++) {
                 Hotel hotel = uniqueHotels.get(i);
                 System.out.println("Hotel number " + (i + 1) + " information:");
-                System.out.println("ID: " + hotel.getId());
                 System.out.println("Name: " + hotel.getName());
-                System.out.println("Price per night: " + hotel.getPrice());
+                System.out.println("Price: " + hotel.getPrice());
                 System.out.println("Stars: " + hotel.getStars());
                 System.out.println("Scores: " + hotel.getScore());
                 System.out.println("Island: " + hotel.getIsland());

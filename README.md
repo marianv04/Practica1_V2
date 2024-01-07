@@ -20,9 +20,9 @@ The BusinessUnit module, first tries to take the events from broker, but if ther
 ### Execution process
 To execute the project, there must be an argument in the mains of the "PredictionProvider" and "HotelProvider" modules with the respective user's API key. Be sure to be subscribed from both APIs.
 
-Additionally, the "DatalakeBuilder" module should be executed first, so that it waits for messages from the subscribed topics. Consequently, the "PredictionProvider" and "HotelProvider" modules should then be executed to send messages to the broker, while the other module receives them.
+Additionally, the "DatalakeBuilder" module should be executed first, so that it waits for messages from the subscribed topics, also to save the datalake in a localized area you have to have in the arguments of the main something like this "DatalakeBuilder/src/main/", you can use this example. Consequently, the "PredictionProvider" and "HotelProvider" modules should then be executed to send messages to the broker, while the other module receives them.
 
-Finally, the "BusinessUnit" module then can be executed at any time when it is needed.
+Finally, the "BusinessUnit" module then can be executed at any time when it is needed, however you have to include also something like this "DatalakeBuilder/src/main/" in the arguments of the main, to be able to find the datalake whenever is needed.
 
 ## Resources Used
 - Development Environments: IntelliJ IDEA
