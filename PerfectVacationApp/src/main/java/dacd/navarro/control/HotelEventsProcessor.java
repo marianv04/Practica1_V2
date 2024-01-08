@@ -50,7 +50,6 @@ public class HotelEventsProcessor {
     public static Hotel parseHotelEvent(String json) {
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = jsonParser.parse(json).getAsJsonObject();
-
         String id = jsonObject.get("id").getAsString();
         String name = jsonObject.get("name").getAsString();
         String island = jsonObject.get("island").getAsString();
@@ -59,13 +58,11 @@ public class HotelEventsProcessor {
         if (priceElement != null && !priceElement.isJsonNull()) {
             price = priceElement.getAsDouble();
         }
-
         int stars = 0;
         JsonElement starsElement = jsonObject.get("stars");
         if (starsElement != null && !starsElement.isJsonNull()) {
             stars = starsElement.getAsInt();
         }
-
         double scores = 0.0;
         JsonElement scoresElement = jsonObject.get("score");
         if (scoresElement != null && !scoresElement.isJsonNull()) {
@@ -73,8 +70,6 @@ public class HotelEventsProcessor {
         }
         double latitude = jsonObject.get("latitude").getAsDouble();
         double longitude = jsonObject.get("longitude").getAsDouble();
-
-
         Hotel hotelObject = new Hotel(island, id, name, price, stars, scores, latitude, longitude);
         return hotelObject;
     }

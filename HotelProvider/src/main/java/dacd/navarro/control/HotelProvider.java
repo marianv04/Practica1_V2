@@ -108,7 +108,6 @@ public class HotelProvider implements Provider{
                             out.value(ts.toString());
                         }
                     }
-
                     @Override
                     public Instant read(JsonReader in) throws IOException {
                         if (in.peek() == JsonToken.NULL) {

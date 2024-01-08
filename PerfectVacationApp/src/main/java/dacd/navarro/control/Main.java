@@ -18,6 +18,5 @@ public class Main {
         String chosenIsland = RecommendationService.findDestination(weatherObjects);
 
         RecommendationService.findHotel(chosenIsland, hotelObjects);
-
     }
 }

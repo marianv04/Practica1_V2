@@ -181,7 +181,7 @@ public class RecommendationService {
 
         List<Hotel> userStarList = chooseStars(chosenIslandHotels, userStars);
 
-        System.out.println("¿Which price range are you willing to pay per night low price (<80), normal price (>=80 and <=180) or high price (>180)? (Please answer with: low, normal or high)");
+        System.out.println("¿Which price range are you willing to pay per night low price (<600), normal price (>=600 and <=1000) or high price (>1000)? (Please answer with: low, normal or high)");
         String userPrice = scanner.nextLine();
 
         List<Hotel> userPriceList;
@@ -270,7 +270,7 @@ public class RecommendationService {
         if ("low".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price < 80) {
+                if (price < 600) {
                     userPriceList.add(hotel);
                 }
             }
@@ -279,7 +279,7 @@ public class RecommendationService {
         if ("normal".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price >= 80 & price <= 180) {
+                if (price >= 600 & price <= 1000) {
                     userPriceList.add(hotel);
                 }
             }
@@ -288,7 +288,7 @@ public class RecommendationService {
         if ("high".equals(userPrice)) {
             for (Hotel hotel : userScoreList) {
                 double price = hotel.getPrice();
-                if (price > 180) {
+                if (price > 1000) {
                     userPriceList.add(hotel);
                 }
             }

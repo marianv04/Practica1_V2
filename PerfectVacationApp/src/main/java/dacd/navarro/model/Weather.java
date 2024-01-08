@@ -7,11 +7,11 @@ public class Weather {
     private double windSpeed;
     private double precipitation;
     private String island;
-    private String predictionTime;
+    private String predictionTs;
 
-    public Weather(String island, String predictionTime, double temperature, double precipitation, int humidity, int clouds, double windSpeed) {
+    public Weather(String island, String predictionTs, double temperature, double precipitation, int humidity, int clouds, double windSpeed) {
         this.island = island;
-        this.predictionTime = predictionTime;
+        this.predictionTs = predictionTs;
         this.temperature = temperature;
         this.humidity = humidity;
         this.clouds = clouds;
@@ -43,8 +43,8 @@ public class Weather {
         return windSpeed;
     }
 
-    public String getPredictionTime() {
-        return predictionTime;
+    public String getPredictionTs() {
+        return predictionTs;
     }
 
     public String getIsland() {

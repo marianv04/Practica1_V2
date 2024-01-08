@@ -1,20 +1,19 @@
 package dacd.navarro.model;
-
-
+import java.sql.Timestamp;
 import java.time.Instant;
-
 public class Weather {
     private Instant ts;
     private String ss;
-    private String predictionTime;
+    private Timestamp predictionTs;
     private double temperature;
     private int humidity;
     private int clouds;
     private double windSpeed;
     private double precipitation;
+    private String island;
     private Location location;
 
-    public Weather(Location location, Instant ts, String ss, String predictionTime, double temperature, double precipitation, int humidity, int clouds, double windSpeed) {
+    public Weather(Location location, Instant ts, String ss, String island, Timestamp predictionTs, double temperature, double precipitation, int humidity, int clouds, double windSpeed) {
         this.location = location;
         this.temperature = temperature;
         this.humidity = humidity;
@@ -23,7 +22,8 @@ public class Weather {
         this.precipitation = precipitation;
         this.ts = ts;
         this.ss = ss;
-        this.predictionTime = predictionTime;
+        this.island = island;
+        this.predictionTs = predictionTs;
     }
 
     public double getPrecipitation() {
@@ -59,8 +59,12 @@ public class Weather {
         return ss;
     }
 
-    public String getPredictionTime() {
-        return predictionTime;
+    public Timestamp getPredictionTs() {
+        return predictionTs;
+    }
+
+    public String getIsland() {
+        return island;
     }
 
     public Location getLocation() {

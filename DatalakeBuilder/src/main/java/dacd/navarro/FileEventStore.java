@@ -19,7 +19,6 @@ public class FileEventStore implements Listener{
 
         String tsString = jsonObject.get("ts").getAsString();
         String ss = jsonObject.get("ss").getAsString();
-
         Instant ts = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(tsString));
 
         LocalDateTime tsLocalDateTime = LocalDateTime.ofInstant(ts, ZoneId.of("UTC"));
@@ -38,19 +37,15 @@ public class FileEventStore implements Listener{
             if (!directory.toFile().exists()) {
                 directory.toFile().mkdirs();
             }
-
             String fileName = directoryPath.get(1) + ".events";
             Path filePath = Paths.get(directoryPath.get(0)).resolve(fileName);
-
             try (FileWriter fileWriter = new FileWriter(filePath.toString(), true)) {
                 System.out.println("File created.");
                 fileWriter.write(json);
                 fileWriter.write(System.lineSeparator());
                 System.out.println("The serialized event has been written in the file.");
             }
-
             System.out.println("Event successfully stored in the Datalake.");
-
         } catch (IOException e) {
             e.printStackTrace();
         }

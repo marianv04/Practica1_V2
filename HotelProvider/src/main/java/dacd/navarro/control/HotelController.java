@@ -14,7 +14,6 @@ import java.util.List;
 public class HotelController {
     public static void execute(String apiKey) throws JMSException {
         List<String> islands;
-
         LocalDate currentDate = LocalDate.now();
         LocalDate futureDate = currentDate.plusDays(5);
 
@@ -28,14 +27,11 @@ public class HotelController {
             int regionId = HotelApiConnector.getRegionId(islands.get(i), apiKey);
             String response = HotelApiConnector.getHotels(regionId, apiKey, currentDateFormatted, futureDateFormatted, 1);
             List<String> hotelSerializedList = dataProvider.getHotelInfo(response, islands.get(i));
-
             for(String hotelObjectSerialized : hotelSerializedList){
-
                 MessageSender.messageToBroker(hotelObjectSerialized);
                 System.out.println("Message sent:" + hotelObjectSerialized);
             }
             System.out.println("Hotel list from " + islands.get(i) + " added.");
-
         }
     }
 

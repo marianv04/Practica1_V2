@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface Provider {
-    List<Weather> getWeatherData(List<Location> locationObjectList) throws IOException;
-    List<Weather> parseWeatherList(Location location, JsonArray weatherList, JsonObject city, String locationName);
-    Weather createWeatherObject(Location location, JsonObject weatherData, String locationName, String cityName);
+    List<Weather> getWeatherData(List<Location> locationObjectList, List<String> islandsNames) throws IOException;
+    List<Weather> parseWeatherList(Location location, JsonArray weatherList, String locationName);
+    Weather createWeatherObject(Location location, JsonObject weatherData, String locationName);
     Gson createGson();
     String serializeWeatherObject(Weather weatherObject);
 }
