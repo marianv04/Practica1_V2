@@ -8,9 +8,9 @@ import java.util.*;
 public class RecommendationService {
     public static String findDestination(List<Weather> weatherObjects) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Now that all data has been downloaded we can start to search you most suitable destinations.\n");
-        System.out.println("First of all, lets see which island matches you climatic preferences the best.\n");
-        System.out.println("¿Do you prefer a colder (<16), normal(>=16 and <=20) or hotter(>20) temperatures? (Please answer with one word: colder, normal or hotter)\n");
+        System.out.println("Now that all data has been downloaded we can start to search your most suitable destinations.\n");
+        System.out.println("First of all, lets see which island matches your climatic preferences the best.\n");
+        System.out.println("¿Do you prefer a colder (<16), normal(>=16 and <=20) or hotter(>20) temperature? (Please answer with one word: colder, normal or hotter)\n");
         String userTemp = scanner.nextLine();
         List<Weather> userTempList = chooseTemperature(userTemp, weatherObjects);
         String chosenIsland = null;
@@ -47,17 +47,17 @@ public class RecommendationService {
 
         if(chosenIsland != null){
             System.out.println("Now, on the basis of your answers we can determine that the most suitable destination for you is: " + chosenIsland + "\n");
-            System.out.println("¿Do you want to continue the process with this island or do you want to choose one? (Please answer with continue or choose)\n");
+            System.out.println("¿Do you want to continue the process with this island or do you want to choose a new one? (Please answer with continue or choose)\n");
             String confirmation = scanner.nextLine();
             if ("continue".equals(confirmation)){
                 System.out.println("You will continue with " + chosenIsland + ".");
             } else {
-                System.out.println("You are not happy with the island chosen, so, ¿Which island do you want to choose? (Please answer with one of this options: Gran_Canaria, Tenerife, La_Gomera, La_Graciosa, Lazarote, Fuerteventura, La_Palma or El_Hierro.\n");
+                System.out.println("You are not happy with the island chosen, so, ¿Which island do you want to choose? (Please answer with one of this options: Gran_Canaria, Tenerife, La_Gomera, La_Graciosa, Lanzarote, Fuerteventura, La_Palma or El_Hierro.\n");
                 chosenIsland = scanner.nextLine();
                 System.out.println("You chose " + chosenIsland + ".");
             }
         } else {
-            System.out.println("There is not an island that fulfills your preferences. ¿Which island do you want to choose? (Please answer with one of this options: Gran_Canaria, Tenerife, La_Gomera, La_Graciosa, Lazarote, Fuerteventura, La_Palma or El_Hierro.\n");
+            System.out.println("There is not an island that fulfills your preferences. ¿Which island do you want to choose? (Please answer with one of this options: Gran_Canaria, Tenerife, La_Gomera, La_Graciosa, Lanzarote, Fuerteventura, La_Palma or El_Hierro.\n");
             chosenIsland = scanner.nextLine();
             System.out.println("You chose " + chosenIsland + ".");
         }
@@ -176,12 +176,12 @@ public class RecommendationService {
             }
         }
         System.out.println("We have " + chosenIslandHotels.size() + " options of hotels for you.\n");
-        System.out.println("First of all, ¿which score do you want your hotel to have at least? (Please answer 1, 2, 3, 4 or 5)\n");
+        System.out.println("First of all, ¿how many stars do you want your hotel to have at least? (Please answer 1, 2, 3, 4 or 5)\n");
         String userStars = scanner.nextLine();
 
         List<Hotel> userStarList = chooseStars(chosenIslandHotels, userStars);
 
-        System.out.println("¿Which price range are you willing to pay per night low price (<600), normal price (>=600 and <=1000) or high price (>1000)? (Please answer with: low, normal or high)");
+        System.out.println("¿Which price range are you willing to pay, low price (<600), normal price (>=600 and <=1000) or high price (>1000)? (Please answer with: low, normal or high)");
         String userPrice = scanner.nextLine();
 
         List<Hotel> userPriceList;
@@ -224,7 +224,7 @@ public class RecommendationService {
                     userStarsList.add(hotel);
                 }
             }
-            System.out.println("You chose at last 1 star.");
+            System.out.println("You chose at least 1 star.");
         }
         if ("2".equals(userStars)) {
             for (Hotel hotel : chosenIslandHotels) {
