@@ -15,7 +15,7 @@ The WeatherProvider and HotelProvider module is tasked with obtaining meteorolog
 
 The DatalakeBuilder is a module whose purpose is to systematically store consumed events from the broker in a directory based on their temporal order. Therefore, it is subscribed to the aforementioned topics and serializes the events in the datalake following a specific directory structure.
 
-The BusinessUnit module, first tries to take the events from broker, but if there are no events available in the moment of execution, the module is tasked to read the events from the datalake. These events are then deserialized and saved in a datamart. And finally, the information from the datamart is used as a recommendation service to choose to what island to travel and what hotel to go.
+The PerfectVacationApp module, first tries to take the events from broker, but if there are no events available in the moment of execution, the module is tasked to read the events from the datalake. These events are then deserialized and saved in a datamart. And finally, the information from the datamart is used as a recommendation service to choose to what island to travel and what hotel to go.
 
 ### Execution process
 To execute the project, there must be an argument in the mains of the "PredictionProvider" and "HotelProvider" modules with the respective user's API key. Be sure to be subscribed from both APIs.
@@ -61,14 +61,14 @@ In the HotelProvider module there are found 7 different classes:
 - The "MessageSender" class is responsible for establishing a connection with the broker, creating a topic within it, and sending serialized events.
 - Additionally, an interface is created for "HotelProvider", named "Provider".
 
-In the BusinessUnit module there are 9 different classes found:
+In the BusinessUnit module, called PerfectVacationApp there are 9 different classes found:
 
 - The "Main" class, where functions are called to achieve the purposes of the app.
 - The "AMQTopicWeatherSubscriber" and "AMQTopicHotelSubscriber" classes are meant to complete the same purposes that in the other module.
-- The "Datamart" class is used to check if events are received from broker and save them in a deserialize format in the datamart. However, if there are no events available it reads them from the datalake and then saves them in the same format as before in the same place.
-- "RecommendationService" is used as a CLI where questions are asked to users to take preferences from them and recommend which island and hotel to travel.
+- The "HotelEventsProcessor" and "WeatherEventsProcessor" classes are used to check if events are received from broker and save them in a deserialize format in the datamart. However, if there are no events available it reads them from the datalake and then saves them in the same format as before in the same place.
+- "RecommendationService" is used as a CLI where questions are asked to users to know their preferences and be able to recommend which island and hotel travel to.
 - Additionally, there is an interface called "Subscriber" for the topic subscriber classes.
-- Finally, there are the "Hotel", "Location" and "Weather" classes to make instances of themselves in some other implementations to fulfill the intended purpose.
+- Finally, there are the "Hotel" and "Weather" classes to make instances of themselves in some other implementations to fulfill the intended purpose.
 
 
 ### Patterns and design principles
@@ -82,7 +82,7 @@ Furthermore, interfaces are designed for specific roles and do not contain unnec
 
 Efforts are made to keep the coupling between classes low, as for example the function that is called in the "Main" depends only on the Provider interface, not on specific implementations, and cohesion is high within classes, as each is related to a specific task. Regarding modularity, the code is divided into modular packages and classes, each with a specific responsibility.
 
-In addition, the "Location" and "Weather" classes are immutable, ensuring data stability.
+In addition, the "Location", "Hotel" and "Weather" classes are immutable, ensuring data stability.
 
 Regarding patterns:
 
