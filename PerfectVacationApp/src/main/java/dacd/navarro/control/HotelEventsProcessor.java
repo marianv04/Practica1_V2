@@ -74,13 +74,18 @@ public class HotelEventsProcessor {
         return hotelObject;
     }
 
-    public static List<Hotel> saveHotelInDatamart(String path) {
+    public static List<Hotel> saveHotelInDatamart(String basePath) {
         String topicNameHotel = "search.Hotel";
         String subscriberName = "hotel-provider-BusinessUnit";
         LocalDate currentDate = LocalDate.now();
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-        String hotelDatalakePath = path + "datalake/eventstore/search.Hotel/hotel-provider/" + formattedDate + ".events";
+        String hotelDatalakePath = basePath + "datalake/eventstore/search.Hotel/hotel-provider/" + formattedDate + ".events";
+        if (!new File(hotelDatalakePath).exists()) {
+            LocalDate yesterday = currentDate.minusDays(1);
+            formattedDate = yesterday.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            hotelDatalakePath = basePath + "datalake/eventstore/search.Hotel/hotel-provider/" + formattedDate + ".events";
+        }
 
         System.out.println("------------------");
         System.out.println("Processing hotel events. Please wait a little bit.");
@@ -101,6 +106,4 @@ public class HotelEventsProcessor {
 
         return hotelObjectList;
     }
-
-
 }

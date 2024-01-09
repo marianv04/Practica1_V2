@@ -63,14 +63,18 @@ public class WeatherEventsProcessor {
         return weatherObject;
     }
 
-    public static List<Weather> saveWeatherInDatamart(String path) {
+    public static List<Weather> saveWeatherInDatamart(String basePath) {
         String topicNameWeather = "prediction.Weather";
         String subscriberName = "prediction-provider-BusinessUnit";
 
         LocalDate currentDate = LocalDate.now();
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String weatherDatalakePath = path + "datalake/eventstore/prediction.Weather/prediction-provider/" + formattedDate + ".events";
-
+        String weatherDatalakePath = basePath + "datalake/eventstore/prediction.Weather/prediction-provider/" + formattedDate + ".events";
+        if (!new File(weatherDatalakePath).exists()) {
+            LocalDate yesterday = currentDate.minusDays(1);
+            formattedDate = yesterday.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            weatherDatalakePath = basePath + "datalake/eventstore/prediction.Weather/prediction-provider/" + formattedDate + ".events";
+        }
         System.out.println("----------------");
         System.out.println("Processing weather events. Please wait a little bit.");
         List<Weather> weatherObjectList = new ArrayList<>(readWeatherEventsDatalake(weatherDatalakePath).stream()
