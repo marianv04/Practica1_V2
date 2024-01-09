@@ -20,7 +20,7 @@ The PerfectVacationApp module, first tries to take the events from broker, but i
 ### Execution process
 To execute the project, there must be an argument in the mains of the "PredictionProvider" and "HotelProvider" modules with the respective user's API key. Be sure to be subscribed from both APIs.
 
-Additionally, the "DatalakeBuilder" module should be executed first, so that it waits for messages from the subscribed topics, also to save the datalake in a localized area you have to have in the arguments of the main something like this "DatalakeBuilder/src/main/", you can use this example. Consequently, the "PredictionProvider" and "HotelProvider" modules should then be executed to send messages to the broker, while the other module receives them.
+Additionally, the "DatalakeBuilder" module should be executed first, so that it waits for messages from the subscribed topics (however as it is durable the order does not really matter, events will always be received when they are sent), also to save the datalake in a localized area you have to have in the arguments of the main something like this "DatalakeBuilder/src/main/", you can use this example. Consequently, the "PredictionProvider" and "HotelProvider" modules should then be executed to send messages to the broker, while the other module receives them.
 
 Finally, the "BusinessUnit" module, called "PerfectVacationApp", then can be executed at any time when it is needed, however you have to include also something like this "DatalakeBuilder/src/main/" in the arguments of the main, to be able to find the datalake whenever is needed.
 
@@ -43,7 +43,7 @@ In this project, there are 4 modules, in the PredictionProvider module there are
 - The "MessageSender" class is responsible for establishing a connection with the broker, creating a topic within it, and sending serialized events.
 - Additionally, an interface is created for "WeatherProvider", named "Provider".
 
-In the DatalakeBuilder module there are found 5 different classes:
+In the DatalakeBuilder module there are found 6 different classes:
 
 - The "AMQTopicWeatherSubscriber" class is responsible for subscribing to the topic "prediction.Weather" in the broker where serialized events are sent and subsequently consuming them.
 - The "AMQTopicHotelSubscriber" class is responsible for subscribing to the topic "search.Hotel" in the broker where serialized events are sent and subsequently consuming them.

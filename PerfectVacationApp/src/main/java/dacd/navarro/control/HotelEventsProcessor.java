@@ -30,7 +30,7 @@ public class HotelEventsProcessor {
         return hotelEvents;
     }
 
-    public static List<String> getHotelEventsFromBroker(String topicNameHotel, String subscriberName) throws JMSException {
+    public static List<String> getHotelEventsFromBroker(String topicNameHotel, String subscriberName) {
         List<String> responsesList;
         try (AMQTopicHotelSubscriber topicSubscriber = new AMQTopicHotelSubscriber(topicNameHotel, subscriberName)) {
             CountDownLatch latch = new CountDownLatch(1);
@@ -74,7 +74,7 @@ public class HotelEventsProcessor {
         return hotelObject;
     }
 
-    public static List<Hotel> saveHotelInDatamart(String path) throws JMSException {
+    public static List<Hotel> saveHotelInDatamart(String path) {
         String topicNameHotel = "search.Hotel";
         String subscriberName = "hotel-provider-BusinessUnit";
         LocalDate currentDate = LocalDate.now();
