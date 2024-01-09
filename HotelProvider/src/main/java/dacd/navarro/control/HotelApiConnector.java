@@ -77,7 +77,10 @@ public class HotelApiConnector {
                 .addQueryParameter("checkout_date", checkOut)
                 .addQueryParameter("lodging_type", "HOTEL");
 
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .build();
 
         Request request = new Request.Builder()
                 .url(urlBuilder.build())

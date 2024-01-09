@@ -61,7 +61,6 @@ public class HotelProvider implements Provider{
     public List<String> addObjectsInList(List<Hotel> hotelObjectList) {
         List<String> hotelObjectSerializedList = new ArrayList<>();
         for (Hotel hotel : hotelObjectList) {
-            System.out.println("Objeto creado");
             String hotelJson = serializeHotelObject(hotel);
             hotelObjectSerializedList.add(hotelJson);
         }
